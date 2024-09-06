@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="mylogin">
+	<input type="text" name="name1" placeholder="Enter name" /> <br/> <br/>
+	<input type="password" name="pass1" placeholder="Enter Password" /> <br/> <br/>
+	<input type="submit" value="Login" />
+	</form>
+</body>
+</html>

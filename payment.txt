@@ -1,0 +1,37 @@
+Add PayPal Java SDK dependency to your Maven pom.xml file:
+xml
+Copy code
+<dependency>
+    <groupId>com.paypal.sdk</groupId>
+    <artifactId>checkout-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+Create a JSP page (payment.jsp) to collect payment information:
+jsp
+Copy code
+<form action="PaymentServlet" method="post">
+    <label for="amount">Amount:</label>
+    <input type="text" id="amount" name="amount" required>
+    <!-- Other payment fields -->
+    <button type="submit">Pay with PayPal</button>
+</form>
+Implement PaymentServlet to handle payment processing:
+java
+Copy code
+@WebServlet("/PaymentServlet")
+public class PaymentServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String amount = request.getParameter("amount");
+        // Initialize PayPal client with your API credentials
+        PayPalHttpClient client = new PayPalHttpClient(new SandboxEnvironment("CLIENT_ID", "SECRET_KEY"));
+
+        // Create payment request
+        PaymentCreateRequest request = new PaymentCreateRequest();
+        request.requestBody(buildRequestBody(amount));
+
+        // Execute payment request
+        try {
+            Payment response = client.execute(request);
+            String paymentId = response.result().id();
+            // Redirect user to PayPal for payment completion
+            response.sendRedirect("https://www.sandbox.paypal.com/checkoutnow?paymentId
